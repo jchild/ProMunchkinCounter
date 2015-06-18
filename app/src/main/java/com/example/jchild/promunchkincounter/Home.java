@@ -32,10 +32,7 @@ public class Home extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -48,7 +45,6 @@ public class Home extends ActionBarActivity {
     public void rules(View view){
         Intent intent = new Intent(this, Rules.class);
         startActivity(intent);
-        //TODO
     }
 
     public void exit(View view) {
