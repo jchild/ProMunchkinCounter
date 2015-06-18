@@ -1,35 +1,39 @@
 package com.example.jchild.promunchkincounter;
 
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-
+import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
-public class Game extends FragmentActivity {
+public class Game extends ActionBarActivity{
 
-    List<String> players;
-    List<Integer> level;
-    List<Integer> Strength;
+    List<player> players;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        players = new ArrayList<String>();
-        level = new ArrayList<Integer>();
-        Strength = new ArrayList<Integer>();
         setContentView(R.layout.activity_game);
+        players = new ArrayList<player>();
+
+        UpdateList();
+
+
     }
 
     @Override
@@ -52,7 +56,7 @@ public class Game extends FragmentActivity {
             builder.setTitle("Add New Player");
             builder.setMessage("Please Input the Players Name");
             View layout= View.inflate(this, R.layout.dialog_new_player,null);
-            final EditText savedText = ((EditText)layout.findViewById(R.id.add_user));
+            final EditText savedText = ((EditText)layout.findViewById(R.id.playerName));
 
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
@@ -79,11 +83,24 @@ public class Game extends FragmentActivity {
     }
 
     private void addNewPlayerData(String name){
+        player newPlayer = new player(name);
+        players.add(newPlayer);
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context,newPlayer.getName()+" added to the game.", duration);
+        toast.show();
+       // UpdateList();
 
-        players.add(name);
-        level.add(0);
-        Strength.add(0);
 
     }
 
+    public void UpdateList(){
+        ListView list = (ListView) findViewById(R.id.listView);
+        list.setAdapter(new ListViewAdapter(this, players));
+        list.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(Game.this, "click" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
