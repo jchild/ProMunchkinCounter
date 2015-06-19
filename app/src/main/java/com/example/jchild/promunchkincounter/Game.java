@@ -1,9 +1,7 @@
 package com.example.jchild.promunchkincounter;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -13,28 +11,37 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Game extends ActionBarActivity{
 
-    List<player> players;
+    ArrayList<player> players;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        players = new ArrayList<player>();
-
-        UpdateList();
+        if(savedInstanceState == null || !savedInstanceState.containsKey("key")) {
+            players = new ArrayList<player>();
+            ListView list = (ListView) findViewById(R.id.listView);
+            list.setAdapter(new ListViewAdapter(this, players));
+            list.setOnItemClickListener(new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    Toast.makeText(Game.this, "click", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else {
+            players = savedInstanceState.getParcelableArrayList("key");
+        }
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,24 +90,51 @@ public class Game extends ActionBarActivity{
     }
 
     private void addNewPlayerData(String name){
-        player newPlayer = new player(name);
+        player newPlayer = new player();
+        newPlayer.setName(name);
         players.add(newPlayer);
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context,newPlayer.getName()+" added to the game.", duration);
+        Toast toast = Toast.makeText(context, newPlayer.getName() + " added to the game.", duration);
         toast.show();
-       // UpdateList();
-
 
     }
 
-    public void UpdateList(){
-        ListView list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(new ListViewAdapter(this, players));
-        list.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(Game.this, "click" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelableArrayList("key", players);
+        super.onSaveInstanceState(savedInstanceState);
+
     }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 }

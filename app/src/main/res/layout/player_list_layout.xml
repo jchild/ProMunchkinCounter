@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="25dp"
+    android:paddingBottom="15dp">
 
     <TextView android:text="@string/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Name" />
+        android:id="@+id/playerName"
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lvl"
-        android:id="@+id/level"
+        android:text="0"
+        android:id="@+id/playerlvl"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/strength"
-        android:layout_marginRight="20dp"/>
+        android:layout_toLeftOf="@+id/playerstr"
+        android:layout_marginRight="50dp"
+        android:textSize="20dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/str"
-        android:id="@+id/strength"
+        android:text="0"
+        android:id="@+id/playerstr"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:textSize="20dp" />
 
 </RelativeLayout>

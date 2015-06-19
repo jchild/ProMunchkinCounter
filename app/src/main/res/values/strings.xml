@@ -8,4 +8,5 @@
     <string name="name">Player\'s Name</string>
     <string name="lvl">Level</string>
     <string name="str">Strength</string>
+    <string name="title_activity_player_stats">playerStats</string>
 </resources>

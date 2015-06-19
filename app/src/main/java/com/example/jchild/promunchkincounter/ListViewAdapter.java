@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class ListViewAdapter extends BaseAdapter {
     private Context context;
-    private List<player> players;
+    private ArrayList<player> players;
 
-    public ListViewAdapter(Context context, List<player> players) {
+    public ListViewAdapter(Context context, ArrayList<player> players) {
         this.context = context;
         this.players = players;
     }
@@ -47,11 +47,11 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         TextView name = (TextView)convertView.findViewById(R.id.playerName);
-        TextView level=(TextView)convertView.findViewById(R.id.level);
-        TextView str = (TextView)convertView.findViewById(R.id.strength);
+        TextView lvl=(TextView)convertView.findViewById(R.id.playerlvl);
+        TextView str = (TextView)convertView.findViewById(R.id.playerstr);
 
         name.setText(players.get(position).getName());
-        level.setText(players.get(position).getlvl());
+        lvl.setText(players.get(position).getlvl());
         str.setText(players.get(position).getStr());
 
         return convertView;

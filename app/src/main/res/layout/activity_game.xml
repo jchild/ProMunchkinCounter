@@ -8,16 +8,16 @@
 
     <TextView android:text="@string/name" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/playerName" />
+        android:id="@+id/Name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lvl"
-        android:id="@+id/lvl"
+        android:id="@+id/level"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/str"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="15dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
