@@ -39,33 +39,36 @@
         android:text="Strength: "
         android:id="@+id/textStr"
         android:textSize="20dp"
+        android:layout_marginBottom="49dp"
         android:layout_above="@+id/allyButt"
-        android:layout_marginBottom="20dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <FrameLayout
         android:id="@+id/fram"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pName"
-        android:layout_above="@+id/pstr"
         android:layout_alignRight="@+id/allyButt"
         android:layout_alignEnd="@+id/allyButt"
         android:layout_alignLeft="@+id/allyButt"
-        android:layout_alignStart="@+id/allyButt"></FrameLayout>
+        android:layout_alignStart="@+id/allyButt"
+        android:layout_above="@+id/frame1"
+        android:layout_below="@+id/frame2"></FrameLayout>
 
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pName"
+        android:layout_below="@id/frame2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="38dp"
         android:layout_marginStart="38dp"
         android:layout_toLeftOf="@+id/allyButt"
         android:layout_toStartOf="@+id/allyButt"
-        android:layout_above="@+id/pstr">
+        android:layout_alignBottom="@+id/fram"
+        android:id="@+id/lvlFrame">
 
         <TextView
             android:layout_width="wrap_content"
@@ -84,7 +87,7 @@
             android:textSize="25dp"
             android:layout_width="118dp"
             android:layout_height="98dp"
-            android:id="@+id/imageButton"
+            android:id="@+id/addLvl"
             android:layout_gravity="center_horizontal|top" />
 
         <Button
@@ -92,14 +95,15 @@
             android:textSize="25dp"
             android:layout_width="118dp"
             android:layout_height="98dp"
-            android:id="@+id/imageButton2"
+            android:id="@+id/minusLvl"
             android:layout_gravity="center_horizontal|bottom" />
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/strFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/pName"
+        android:layout_below="@+id/frame2"
         android:layout_alignParentRight="true"
         android:layout_marginRight="38dp"
         android:layout_toRightOf="@+id/allyButt"
@@ -123,7 +127,7 @@
             android:textSize="25dp"
             android:layout_width="118dp"
             android:layout_height="98dp"
-            android:id="@+id/imageButton3"
+            android:id="@+id/MinusEquip"
             android:layout_gravity="center_horizontal|bottom" />
 
         <Button
@@ -131,8 +135,44 @@
             android:textSize="25dp"
             android:layout_width="118dp"
             android:layout_height="98dp"
-            android:id="@+id/imageButton4"
+            android:id="@+id/addEquip"
             android:layout_gravity="center_horizontal|top" />
 
     </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame1"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/pstr"
+        android:layout_alignParentStart="true"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame2"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignTop="@+id/pName"
+        android:layout_centerHorizontal="true"></FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Level"
+        android:id="@+id/textView"
+        android:layout_above="@+id/lvlFrame"
+        android:layout_alignLeft="@id/lvlFrame"
+        android:layout_centerVertical="@+id/lvlFrame"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Strength"
+        android:id="@+id/textView2"
+        android:layout_above="@+id/strFrame"
+        android:layout_alignRight="@id/strFrame"
+        android:layout_centerVertical="@+id/strFrame"/>
 </RelativeLayout>
