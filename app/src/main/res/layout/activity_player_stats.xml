@@ -28,10 +28,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alliance"
+        android:text="Monster Battle!"
         android:id="@+id/allyButt"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="Battle"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,14 +47,11 @@
 
     <FrameLayout
         android:id="@+id/fram"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignRight="@+id/allyButt"
-        android:layout_alignEnd="@+id/allyButt"
-        android:layout_alignLeft="@+id/allyButt"
-        android:layout_alignStart="@+id/allyButt"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/frame1"
-        android:layout_below="@+id/frame2"></FrameLayout>
+        android:layout_below="@+id/frame2"
+        android:layout_centerHorizontal="true"></FrameLayout>
 
 
 
@@ -65,38 +63,36 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="38dp"
         android:layout_marginStart="38dp"
-        android:layout_toLeftOf="@+id/allyButt"
-        android:layout_toStartOf="@+id/allyButt"
+        android:layout_toStartOf="@+id/fram"
         android:layout_alignBottom="@+id/fram"
-        android:id="@+id/lvlFrame">
+        android:id="@+id/lvlFrame"
+        android:layout_toLeftOf="@+id/fram">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="9"
             android:id="@+id/lvlNum"
-            android:layout_alignTop="@+id/textView"
-            android:layout_toRightOf="@+id/fram"
-            android:layout_toEndOf="@+id/fram"
             android:textSize="30dp"
             android:layout_gravity="center"
             android:textIsSelectable="false" />
 
-        <Button
-            android:text="+"
+        <ImageButton
             android:textSize="25dp"
             android:layout_width="118dp"
-            android:layout_height="98dp"
+            android:layout_height="71dp"
             android:id="@+id/addLvl"
-            android:layout_gravity="center_horizontal|top" />
+            android:onClick="addLvl"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@mipmap/ic_action_up" />
 
-        <Button
-            android:text="-"
-            android:textSize="25dp"
+        <ImageButton
             android:layout_width="118dp"
-            android:layout_height="98dp"
+            android:layout_height="71dp"
             android:id="@+id/minusLvl"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:onClick="minusLvl"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@mipmap/ic_action_down" />
     </FrameLayout>
 
     <FrameLayout
@@ -106,37 +102,34 @@
         android:layout_below="@+id/frame2"
         android:layout_alignParentRight="true"
         android:layout_marginRight="38dp"
-        android:layout_toRightOf="@+id/allyButt"
-        android:layout_toEndOf="@+id/allyButt"
-        android:layout_alignBottom="@+id/fram">
+        android:layout_toEndOf="@+id/fram"
+        android:layout_alignBottom="@+id/fram"
+        android:layout_toRightOf="@+id/fram">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="30"
             android:id="@+id/equipNum"
-            android:layout_alignTop="@+id/textView"
-            android:layout_toRightOf="@+id/fram"
-            android:layout_toEndOf="@+id/fram"
             android:textSize="30dp"
             android:layout_gravity="center"
             android:textIsSelectable="false" />
 
-        <Button
-            android:text="-"
-            android:textSize="25dp"
+        <ImageButton
             android:layout_width="118dp"
-            android:layout_height="98dp"
+            android:layout_height="71dp"
             android:id="@+id/MinusEquip"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:onClick="minusEquip"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@mipmap/ic_action_down" />
 
-        <Button
-            android:text="+"
-            android:textSize="25dp"
+        <ImageButton
             android:layout_width="118dp"
-            android:layout_height="98dp"
+            android:layout_height="71dp"
             android:id="@+id/addEquip"
-            android:layout_gravity="center_horizontal|top" />
+            android:onClick="addEquip"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@mipmap/ic_action_up" />
 
     </FrameLayout>
 
@@ -162,6 +155,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Level"
+        android:textSize="20dp"
         android:id="@+id/textView"
         android:layout_above="@+id/lvlFrame"
         android:layout_alignLeft="@id/lvlFrame"
@@ -170,9 +164,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Strength"
+        android:text="Equipment"
+        android:textSize="20dp"
         android:id="@+id/textView2"
         android:layout_above="@+id/strFrame"
         android:layout_alignRight="@id/strFrame"
         android:layout_centerVertical="@+id/strFrame"/>
+
 </RelativeLayout>

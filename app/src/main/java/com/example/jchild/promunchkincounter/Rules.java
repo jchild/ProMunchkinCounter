@@ -58,6 +58,10 @@ public class Rules extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onBackPressed(){
+        finish();
+    }
+
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();

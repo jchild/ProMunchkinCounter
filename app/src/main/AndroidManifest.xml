@@ -29,6 +29,10 @@
             android:name=".playerStats"
             android:label="@string/title_activity_player_stats" >
         </activity>
+        <activity
+            android:name=".Battle"
+            android:label="@string/title_activity_battle" >
+        </activity>
     </application>
 
 </manifest>

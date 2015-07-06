@@ -1,5 +1,5 @@
 package com.example.jchild.promunchkincounter;
-
+import com.example.jchild.promunchkincounter.DatabaseHandler;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,34 +27,33 @@ public class Game extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         db = new DatabaseHandler(this);
-        if(savedInstanceState == null || !savedInstanceState.containsKey("key")) {
+        if (savedInstanceState == null || !savedInstanceState.containsKey("key")) {
             players = new ArrayList<player>();
             ListView list = (ListView) findViewById(R.id.listView);
             list.setAdapter(new ListViewAdapter(this, players));
             list.setOnItemClickListener(new OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    player getplayer = players.get(position);
-                    playerScreen(view, getplayer);
-                }
-            });
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        player getplayer = players.get(position);
+                        playerScreen(view, getplayer);
+                    }
+                });
+        } else {
+                players = savedInstanceState.getParcelableArrayList("key");
         }
-        else {
-            players = savedInstanceState.getParcelableArrayList("key");
-        }
-
 
     }
-    public void playerScreen(View v, player p){
+    public void playerScreen(View v, player getplayer){
         Intent i = new Intent(this, playerStats.class);
-        i.putExtra("player", p);
+        i.putExtra("thisPlayer", getplayer);
         startActivity(i);
+        finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_game, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -75,7 +74,6 @@ public class Game extends ActionBarActivity{
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //TODO
                     String name = savedText.getText().toString().trim();
                     addNewPlayerData(name);
                 }
@@ -90,6 +88,11 @@ public class Game extends ActionBarActivity{
             AlertDialog dialog = builder.create();
 
             dialog.show();
+            return true;
+        }
+        if(id == R.id.rules){
+            Intent i = new Intent(this, Rules.class);
+            startActivity(i);
             return true;
         }
 
@@ -132,6 +135,7 @@ public class Game extends ActionBarActivity{
     @Override
     protected void onResume(){
         super.onResume();
+        players = db.getAllPlayers();
         ListView list = (ListView) findViewById(R.id.listView);
         list.setAdapter(new ListViewAdapter(this, players));
         list.setOnItemClickListener(new OnItemClickListener() {
@@ -153,6 +157,7 @@ public class Game extends ActionBarActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
     }
 
     @Override
@@ -164,6 +169,7 @@ public class Game extends ActionBarActivity{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                db.endGame();
                 finish();
             }
         });

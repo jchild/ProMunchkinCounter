@@ -7,20 +7,26 @@ import android.os.Parcelable;
  * Created by Jonathan on 18/6/2015.
  */
 public class player implements Parcelable{
-    private int lvl,equip, ID;
+    private int lvl,equip, ID, bonus;
     private String name;
+    private boolean elf,warrior;
 
     public player(){
         ID = 0;
         lvl = 0;
         equip = 0;
+        bonus = 0;
         name = "error";
+        elf = false;
+        warrior = false;
     }
-    public player(int ID, String name, int lvl, int equip){
+    public player(int ID, String name, int lvl, int equip, boolean elf, boolean warrior){
         this.ID = ID;
         this.name = name;
         this.lvl = lvl;
         this.equip = equip;
+        this.elf = elf;
+        this.warrior = warrior;
     }
     private player(Parcel in){
         this.ID = Integer.parseInt(in.readString());
@@ -52,35 +58,35 @@ public class player implements Parcelable{
     public void setID(int ID){
         this.ID = ID;
     }
-
+    public void setLvl(String lvl){
+        this.lvl = Integer.parseInt(lvl);
+    }
 
     public void increaselvl(){
         lvl++;
     }
-    public void decreaselvl(){
-        lvl--;
-    }
+    public void decreaselvl(){lvl--;}
 
-    public void increaseEquip(){
-        equip++;
-    }
-    public void decreaseEquip(){
-        equip--;
-    }
+    public void increaseEquip(){equip++;}
+    public void decreaseEquip(){equip--;}
+    public void increaseBonus(){bonus++;}
+    public void decreaseBonus(){bonus--;}
 
-    public String getStr(){
-        return String.valueOf(lvl + equip);
-    }
+    public void setElf(boolean elf){this.elf =elf;}
+    public void setWarrior(boolean warrior){this.warrior =warrior;}
+    public Boolean isElf(){return elf;}
+    public Boolean isWarrior(){return warrior;}
+
+    public String getStr(){return String.valueOf(lvl + equip +bonus);}
 
     public String getID(){return String.valueOf(ID); }
-    public String getlvl(){
-        return String.valueOf(lvl);
-    }
-    public String getEquip(){
-        return String.valueOf(equip);
-    }
+    public String getlvl(){return String.valueOf(lvl);}
+    public String getEquip(){return String.valueOf(equip);}
     public String getName(){
         return name;
     }
+    public String getBonus(){return String.valueOf(bonus);}
+    public void zeroBonus(){bonus = 0;}
+
 
 }

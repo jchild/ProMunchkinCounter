@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.jchild.promunchkincounter.Battle">
+
+    <FrameLayout
+        android:id="@+id/fram"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/frame1"
+        android:layout_alignParentBottom="true"></FrameLayout>
+
+
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:id="@+id/monsterFrame"
+        android:layout_above="@+id/frame2"
+        android:layout_toLeftOf="@+id/fram"
+        android:layout_below="@+id/frame1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9"
+            android:id="@+id/monsterEquip"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:textIsSelectable="false" />
+
+        <ImageButton
+            android:textSize="25dp"
+            android:layout_width="118dp"
+            android:layout_height="71dp"
+            android:id="@+id/addLvl"
+            android:onClick="increaseMon"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@mipmap/ic_action_up" />
+
+        <ImageButton
+            android:layout_width="118dp"
+            android:layout_height="71dp"
+            android:id="@+id/minusLvl"
+            android:onClick="decreaseMon"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@mipmap/ic_action_down" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/playerFrame"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/fram"
+        android:layout_above="@+id/frame2"
+        android:layout_below="@+id/frame1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:id="@+id/playerBonus"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:textIsSelectable="false" />
+
+        <ImageButton
+            android:layout_width="118dp"
+            android:layout_height="71dp"
+            android:id="@+id/MinusEquip"
+            android:onClick="decreasePlayEquip"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@mipmap/ic_action_down" />
+
+        <ImageButton
+            android:layout_width="118dp"
+            android:layout_height="71dp"
+            android:id="@+id/addEquip"
+            android:onClick="increasePlayEquip"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@mipmap/ic_action_up" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame1"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame2"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monster Level"
+        android:textSize="18dp"
+        android:id="@+id/monster"
+        android:layout_toLeftOf="@id/fram"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/p_name"
+        android:text="Player's Strength"
+        android:layout_toRightOf="@id/fram"
+        android:textSize="18dp"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playersList"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/fram"
+        android:layout_toStartOf="@+id/fram" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Fight"
+        android:id="@+id/end"
+        android:onClick="endFight"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/fram"
+        android:layout_toRightOf="@+id/fram" />
+
+
+</RelativeLayout>

@@ -9,4 +9,5 @@
     <string name="lvl">Level</string>
     <string name="str">Strength</string>
     <string name="title_activity_player_stats">playerStats</string>
+    <string name="title_activity_battle">Battle</string>
 </resources>

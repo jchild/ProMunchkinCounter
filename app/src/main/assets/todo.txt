@@ -1,0 +1,6 @@
+- layouts for different screen sizes.
+- fix database, currently not creating table onCreate.
+- end game functions
+- fighting monster activity
+- elf and warrior checkboxes
+- alliance button move to fight screen

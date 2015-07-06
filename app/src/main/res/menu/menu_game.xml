@@ -5,6 +5,10 @@
     <item android:id="@+id/add_user"
         android:title="Add User"
         android:icon="@mipmap/ic_action_new"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/rules"
+        android:title="Rules"
+        android:icon="@mipmap/ic_action_help"
+        app:showAsAction="ifRoom" />
 </menu>
 

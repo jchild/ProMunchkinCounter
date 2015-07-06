@@ -78,9 +78,7 @@ public class Home extends ActionBarActivity {
         builder.setMessage("Are you sure you want to exit?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
+            public void onClick(DialogInterface dialog, int which) {finish();}
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override

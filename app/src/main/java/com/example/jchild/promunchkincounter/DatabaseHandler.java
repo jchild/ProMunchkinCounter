@@ -15,17 +15,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     // Database Name
     private static final String DATABASE_NAME = "ProMunchkinDB";
 
-    private static final String TABLE_PLAYER = "Players";
+    private static final String TABLE_PLAYER = "Player";
 
     private static final String KEY_ID = "p_id";
     private static final String KEY_NAME = "p_name";
     private static final String KEY_LEVEL = "p_level";
     private static final String KEY_EQUIPMENT = "p_equipment";
+    private static final String KEY_ELF = "p_elf";
+    private static final String KEY_WARRIOR = "p_warrior";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,8 +36,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_PLAYER + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_LEVEL + " TEXT," + KEY_EQUIPMENT + " TEXT" +")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        String CREATE_PLAYERS_TABLE = "CREATE TABLE " + "Player" + " ( " + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_LEVEL + " TEXT, " + KEY_EQUIPMENT + " TEXT, "+ KEY_ELF + " BOOLEAN, "+ KEY_WARRIOR + " BOOLEAN" + " )";
+        db.execSQL(CREATE_PLAYERS_TABLE);
     }
 
     // Upgrading database
@@ -46,12 +48,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
+        db.close();
     }
-    void endGame(){
+    public void endGame(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER);
-    }
 
+        // Create tables again
+        onCreate(db);
+    }
 
     void addPlayer(player players) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -61,6 +66,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, players.getName());
         values.put(KEY_LEVEL, players.getlvl());
         values.put(KEY_EQUIPMENT,players.getEquip());
+        values.put(KEY_ELF,players.isElf());
+        values.put(KEY_WARRIOR,players.isWarrior());
 
         // Inserting Row
         db.insert(TABLE_PLAYER, null, values);
@@ -71,18 +78,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     player getPlayer(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_PLAYER, new String[]{KEY_ID, KEY_NAME, KEY_LEVEL, KEY_EQUIPMENT}, KEY_ID + "=?",
+        Cursor cursor = db.query(TABLE_PLAYER, new String[]{KEY_ID, KEY_NAME, KEY_LEVEL, KEY_EQUIPMENT, KEY_ELF, KEY_WARRIOR}, KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)));
+        player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),Boolean.valueOf(cursor.getColumnName(4)),Boolean.valueOf(cursor.getString(5)));
 
         return players;
     }
 
     // Getting All Contacts
-    public ArrayList<player> getAllContacts() {
+    public ArrayList<player> getAllPlayers() {
         ArrayList<player> playerList = new ArrayList<player>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PLAYER;
@@ -93,40 +100,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)));
+                player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),Boolean.valueOf(cursor.getColumnName(4)),Boolean.valueOf(cursor.getString(5)));
                 playerList.add(players);
             } while (cursor.moveToNext());
         }
+        db.close();
         return playerList;
     }
 
-    public int updateContact(player players) {
+    public void updatePlayer(player players) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, players.getName());
         values.put(KEY_LEVEL, players.getlvl());
         values.put(KEY_EQUIPMENT, players.getEquip());
+        values.put(KEY_ELF, players.isElf());
+        values.put(KEY_WARRIOR, players.isWarrior());
 
         // updating row
-        return db.update(TABLE_PLAYER, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(players.getID())});
+        db.update(TABLE_PLAYER, values, KEY_ID + " = ?", new String[]{String.valueOf(players.getID())});
+        db.close();
     }
 
-    public void deleteContact(player players) {
+    public void deletePlayer(player players) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PLAYER, KEY_ID + " = ?", new String[]{String.valueOf(players.getID())});
         db.close();
     }
 
 
-    public int getContactsCount() {
+    public int getPlayersCount() {
         String countQuery = "SELECT  * FROM " + TABLE_PLAYER;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int num = cursor.getCount();
         cursor.close();
 
         // return count
-        return cursor.getCount();
+        return num;
     }
 }
