@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.jchild.promunchkincounter.DatabaseHandler;
-import java.util.ArrayList;
 
 
 public class playerStats extends ActionBarActivity {
@@ -24,7 +24,11 @@ public class playerStats extends ActionBarActivity {
         db = new DatabaseHandler(this);
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
+        thisPlayer = db.getPlayer(Integer.parseInt(thisPlayer.getID()));
         updateStats();
+
+        addWarCheckListener();
+        addElfCheckListener();
     }
 
     @Override
@@ -36,17 +40,52 @@ public class playerStats extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(id == R.id.rules){
+            Intent i = new Intent(this, Rules.class);
+            startActivity(i);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addElfCheckListener(){
+
+        CheckBox Elf = (CheckBox) findViewById(R.id.elf);
+        Elf.setChecked(thisPlayer.isElf());
+        Elf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    thisPlayer.setElf(true);
+                    db.updatePlayer(thisPlayer);
+                } else {
+                    thisPlayer.setElf(false);
+                    db.updatePlayer(thisPlayer);
+                }
+            }
+        });
+
+    }
+
+    public void addWarCheckListener(){
+
+        CheckBox War = (CheckBox) findViewById(R.id.warrior);
+        War.setChecked(thisPlayer.isWarrior());
+        War.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(((CheckBox) v).isChecked()) {
+                    thisPlayer.setWarrior(true);
+                    db.updatePlayer(thisPlayer);
+                }
+                else{
+                    thisPlayer.setWarrior(false);
+                    db.updatePlayer(thisPlayer);
+                }
+            }
+        });
     }
     public void updateStats(){
         TextView lvl =(TextView) findViewById(R.id.lvlNum);
@@ -98,19 +137,23 @@ public class playerStats extends ActionBarActivity {
         startActivity(i);
         finish();
     }
+
     public void Battle(View view){
         Intent i = new Intent(this, Battle.class);
         i.putExtra("thisPlayer",thisPlayer);
         startActivity(i);
         finish();
     }
-
-
     public void test(View view){
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
-        int num = db.getPlayersCount();
-        Toast toast = Toast.makeText(context, num + " player(s)", duration);
+        Toast toast = Toast.makeText(context, "Is db.Elf? "+thisPlayer.isElf(), duration);
         toast.show();
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        addWarCheckListener();
+        addElfCheckListener();
     }
 }

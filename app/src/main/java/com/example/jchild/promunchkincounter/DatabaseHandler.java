@@ -14,14 +14,9 @@ import java.util.ArrayList;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
-    // Database Version
     private static final int DATABASE_VERSION = 1;
-
-    // Database Name
     private static final String DATABASE_NAME = "ProMunchkinDB";
-
     private static final String TABLE_PLAYER = "Player";
-
     private static final String KEY_ID = "p_id";
     private static final String KEY_NAME = "p_name";
     private static final String KEY_LEVEL = "p_level";
@@ -36,7 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PLAYERS_TABLE = "CREATE TABLE " + "Player" + " ( " + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_LEVEL + " TEXT, " + KEY_EQUIPMENT + " TEXT, "+ KEY_ELF + " BOOLEAN, "+ KEY_WARRIOR + " BOOLEAN" + " )";
+        String CREATE_PLAYERS_TABLE = "CREATE TABLE " + "Player" + " ( " + KEY_ID + " INTEGER PRIMARY KEY, " + KEY_NAME + " TEXT, " + KEY_LEVEL + " TEXT, " + KEY_EQUIPMENT + " TEXT, "+ KEY_ELF + " TEXT, "+ KEY_WARRIOR + " TEXT" + " )";
         db.execSQL(CREATE_PLAYERS_TABLE);
     }
 
@@ -50,12 +45,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
         db.close();
     }
+
     public void endGame(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER);
-
-        // Create tables again
         onCreate(db);
+        db.close();
     }
 
     void addPlayer(player players) {
@@ -66,8 +61,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, players.getName());
         values.put(KEY_LEVEL, players.getlvl());
         values.put(KEY_EQUIPMENT,players.getEquip());
-        values.put(KEY_ELF,players.isElf());
-        values.put(KEY_WARRIOR,players.isWarrior());
+        values.put(KEY_ELF,String.valueOf(players.isElf()));
+        values.put(KEY_WARRIOR,String.valueOf(players.isWarrior()));
 
         // Inserting Row
         db.insert(TABLE_PLAYER, null, values);
@@ -83,8 +78,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),Boolean.valueOf(cursor.getColumnName(4)),Boolean.valueOf(cursor.getString(5)));
-
+        player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1),Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),Boolean.valueOf(cursor.getString(4)),Boolean.valueOf(cursor.getString(5)));
+        db.close();
         return players;
     }
 
@@ -100,7 +95,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),Boolean.valueOf(cursor.getColumnName(4)),Boolean.valueOf(cursor.getString(5)));
+                player players = new player(Integer.parseInt(cursor.getString(0)),cursor.getString(1), Integer.parseInt(cursor.getString(2)), Integer.parseInt(cursor.getString(3)),Boolean.valueOf(cursor.getString(4)),Boolean.valueOf(cursor.getString(5)));
                 playerList.add(players);
             } while (cursor.moveToNext());
         }
@@ -115,8 +110,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, players.getName());
         values.put(KEY_LEVEL, players.getlvl());
         values.put(KEY_EQUIPMENT, players.getEquip());
-        values.put(KEY_ELF, players.isElf());
-        values.put(KEY_WARRIOR, players.isWarrior());
+        values.put(KEY_ELF, String.valueOf(players.isElf()));
+        values.put(KEY_WARRIOR, String.valueOf(players.isWarrior()));
 
         // updating row
         db.update(TABLE_PLAYER, values, KEY_ID + " = ?", new String[]{String.valueOf(players.getID())});

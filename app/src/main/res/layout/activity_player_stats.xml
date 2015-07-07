@@ -155,20 +155,46 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Level"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:id="@+id/textView"
         android:layout_above="@+id/lvlFrame"
         android:layout_alignLeft="@id/lvlFrame"
-        android:layout_centerVertical="@+id/lvlFrame"/>
+        android:layout_centerVertical="@+id/lvlFrame"
+        android:gravity="center"
+        android:layout_alignRight="@+id/lvlFrame"
+        android:layout_alignEnd="@+id/lvlFrame" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Equipment"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:id="@+id/textView2"
         android:layout_above="@+id/strFrame"
+        android:layout_centerVertical="@+id/strFrame"
+        android:layout_alignLeft="@id/strFrame"
         android:layout_alignRight="@id/strFrame"
-        android:layout_centerVertical="@+id/strFrame"/>
+        android:layout_alignEnd="@id/strFrame"
+        android:gravity="center" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elf"
+        android:id="@+id/elf"
+        android:layout_below="@+id/lvlFrame"
+        android:layout_toLeftOf="@+id/fram"
+        android:layout_alignLeft="@+id/lvlFrame"
+        android:layout_alignStart="@+id/lvlFrame" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Warrior"
+        android:id="@+id/warrior"
+        android:layout_below="@+id/strFrame"
+        android:layout_toRightOf="@+id/fram"
+        android:layout_alignRight="@+id/strFrame"
+        android:layout_alignEnd="@+id/strFrame" />
 
 </RelativeLayout>

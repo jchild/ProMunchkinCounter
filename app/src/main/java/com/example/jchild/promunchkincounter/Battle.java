@@ -8,7 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,21 +24,39 @@ public class Battle extends ActionBarActivity {
     private player monster;
     private boolean setMon;
     private player help;
+    private int win, partySt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
-        db = new DatabaseHandler(this);
-        players = db.getAllPlayers();
+
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
+
+        db = new DatabaseHandler(this);
+        removeThisPlayer();
+
+        Spinner spinner = (Spinner) findViewById(R.id.playersList);
+        spinner.setAdapter(new SpinnerAdapter(this, players));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                help = players.get(position);
+                updateStats();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         help = new player();
         monster = new player();
         monsterLevelPop();
-        removeThisPlayer();
-        updateStats();
+        setMon = false;
 
+        updateStats();
     }
 
     @Override
@@ -53,13 +73,10 @@ public class Battle extends ActionBarActivity {
             startActivity(i);
             return true;
         }
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
+
     public void monsterLevelPop(){
         if(setMon == false) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -71,15 +88,11 @@ public class Battle extends ActionBarActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String lvl = savedText.getText().toString().trim();
-                    monster.setLvl(lvl);
-                    setMon = true;
-                    updateStats();
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
+                    if (!lvl.isEmpty()) {
+                        monster.setLvl(lvl);
+                        setMon = true;
+                        updateStats();
+                    }
                 }
             });
             builder.setView(layout);
@@ -89,16 +102,21 @@ public class Battle extends ActionBarActivity {
         }
     }
     public void removeThisPlayer(){
-        players.remove(thisPlayer);
+        db.deletePlayer(thisPlayer);
+        players = db.getAllPlayers();
+        player temp = new player();
+        temp.setLvl("-1");
+        temp.increaseEquip();
+        players.add(0,temp);
     }
 
     public void endFight(View view){
-        if( Integer.parseInt(monster.getStr()) >= Integer.parseInt(thisPlayer.getStr())){
-            if(Integer.parseInt(monster.getStr()) == Integer.parseInt(thisPlayer.getStr())&& thisPlayer.isWarrior()){
+        if( win <= 0){
+            if(win == 0 && thisPlayer.isWarrior() || win == 0 && help.isWarrior()){
                 if(help.isElf()){
                     thisPlayer.zeroBonus();
                     thisPlayer.increaselvl();
-                    db.updatePlayer(thisPlayer);
+                    db.addPlayer(thisPlayer);
                     help.increaselvl();
                     db.updatePlayer(help);
                     Intent i = new Intent(this, playerStats.class);
@@ -108,13 +126,18 @@ public class Battle extends ActionBarActivity {
                 }else {
                     thisPlayer.zeroBonus();
                     thisPlayer.increaselvl();
-                    db.updatePlayer(thisPlayer);
+                    db.addPlayer(thisPlayer);
                     Intent i = new Intent(this, playerStats.class);
                     i.putExtra("thisPlayer", thisPlayer);
                     startActivity(i);
                     finish();
                 }
             }else{
+                thisPlayer.zeroBonus();
+                db.addPlayer(thisPlayer);
+                Intent i = new Intent(this, playerStats.class);
+                i.putExtra("thisPlayer", thisPlayer);
+                startActivity(i);
                 finish();
             }
         }
@@ -122,7 +145,7 @@ public class Battle extends ActionBarActivity {
             if(help.isElf()){
                 thisPlayer.zeroBonus();
                 thisPlayer.increaselvl();
-                db.updatePlayer(thisPlayer);
+                db.addPlayer(thisPlayer);
                 help.increaselvl();
                 db.updatePlayer(help);
                 Intent i = new Intent(this, playerStats.class);
@@ -132,7 +155,7 @@ public class Battle extends ActionBarActivity {
             }else {
                 thisPlayer.zeroBonus();
                 thisPlayer.increaselvl();
-                db.updatePlayer(thisPlayer);
+                db.addPlayer(thisPlayer);
                 Intent i = new Intent(this, playerStats.class);
                 i.putExtra("thisPlayer", thisPlayer);
                 startActivity(i);
@@ -142,16 +165,33 @@ public class Battle extends ActionBarActivity {
     }
 
     public void updateStats(){
-        //TODO
         TextView name = (TextView) findViewById(R.id.p_name);
         TextView mon = (TextView) findViewById(R.id.monster);
         TextView monBonus = (TextView) findViewById(R.id.monsterEquip);
         TextView playBonus = (TextView) findViewById(R.id.playerBonus);
+        TextView winning = (TextView) findViewById(R.id.winning);
+        TextView party = (TextView) findViewById(R.id.partyStr);
 
         name.setText(thisPlayer.getName()+"'s Strength: "+ thisPlayer.getStr());
         mon.setText("Monster's Strength: "+ monster.getStr());
         monBonus.setText(monster.getEquip());
         playBonus.setText(thisPlayer.getBonus());
+
+
+        if(isWinning()){
+            if(thisPlayer.isWarrior()||help.isWarrior())
+                winning.setText("Winning by: "+ (win + 1 ));
+            else
+                winning.setText("Winning by: " + win);
+        }
+        else{
+            if(thisPlayer.isWarrior()||help.isWarrior())
+                winning.setText("Losing by: "+ (win * (-1)) );
+            else
+                winning.setText("Losing by: "+ ((win * (-1)) + 1 ) );
+
+        }
+        party.setText("Party Strength: "+String.valueOf(partySt));
     }
     public void increaseMon(View view){
         monster.increaseEquip();
@@ -175,8 +215,32 @@ public class Battle extends ActionBarActivity {
 
     }
 
+    public boolean isWinning(){
+        int monStr = Integer.parseInt(monster.getStr());
+        int playStr = Integer.parseInt(thisPlayer.getStr());
+        int helpStr = Integer.parseInt(help.getStr());
+        partySt = (playStr+helpStr);
+        win = partySt - monStr;
+
+        if(win <= 0 && !thisPlayer.isWarrior() || win <= 0 && !help.isWarrior()){
+            return false;
+        }
+        else if(win < 0 && thisPlayer.isWarrior() || win < 0 && help.isWarrior()){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
     @Override
     public void onBackPressed() {
+        thisPlayer.zeroBonus();
+        Intent i = new Intent(this, playerStats.class);
+        i.putExtra("thisPlayer", thisPlayer);
+        startActivity(i);
+        finish();
         super.onBackPressed();
     }
 }

@@ -1,6 +1,8 @@
-- layouts for different screen sizes.
-- fix database, currently not creating table onCreate.
 - end game functions
-- fighting monster activity
+    - dialog box to announce winner
 - elf and warrior checkboxes
-- alliance button move to fight screen
+- continue game button
+- new game dialog, ask user if wants to start new game if there is a game currently in database
+    - will wipe database if user selects positive action
+- spinner
+- art/style

@@ -16,7 +16,7 @@ public class player implements Parcelable{
         lvl = 0;
         equip = 0;
         bonus = 0;
-        name = "error";
+        name = "Name";
         elf = false;
         warrior = false;
     }
@@ -55,16 +55,10 @@ public class player implements Parcelable{
     }
 
     public void setName(String name){ this.name = name; }
-    public void setID(int ID){
-        this.ID = ID;
-    }
-    public void setLvl(String lvl){
-        this.lvl = Integer.parseInt(lvl);
-    }
+    public void setID(int ID){this.ID = ID;}
+    public void setLvl(String lvl){this.lvl = Integer.parseInt(lvl);}
 
-    public void increaselvl(){
-        lvl++;
-    }
+    public void increaselvl(){lvl++;}
     public void decreaselvl(){lvl--;}
 
     public void increaseEquip(){equip++;}
@@ -72,8 +66,8 @@ public class player implements Parcelable{
     public void increaseBonus(){bonus++;}
     public void decreaseBonus(){bonus--;}
 
-    public void setElf(boolean elf){this.elf =elf;}
-    public void setWarrior(boolean warrior){this.warrior =warrior;}
+    public void setElf(boolean elf){this.elf = elf;}
+    public void setWarrior(boolean warrior){this.warrior = warrior;}
     public Boolean isElf(){return elf;}
     public Boolean isWarrior(){return warrior;}
 

@@ -124,8 +124,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/playersList"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/fram"
-        android:layout_toStartOf="@+id/fram" />
+        android:layout_toStartOf="@+id/end"
+        android:layout_toLeftOf="@+id/end" />
 
     <Button
         android:layout_width="wrap_content"
@@ -136,6 +136,53 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/fram"
         android:layout_toRightOf="@+id/fram" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monster Bonus"
+        android:id="@+id/textView3"
+        android:layout_above="@+id/monsterFrame"
+        android:layout_alignRight="@+id/playersList"
+        android:layout_alignEnd="@+id/playersList"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_alignLeft="@+id/monsterFrame"
+        android:layout_alignStart="@+id/monsterFrame" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player Bonus"
+        android:id="@+id/textView4"
+        android:layout_above="@+id/playerFrame"
+        android:layout_toRightOf="@+id/fram"
+        android:layout_alignRight="@+id/playerFrame"
+        android:layout_alignEnd="@+id/playerFrame" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Party Strength: 0"
+        android:id="@+id/partyStr"
+        android:layout_alignRight="@+id/playerFrame"
+        android:layout_alignEnd="@+id/playerFrame"
+        android:layout_below="@+id/monsterFrame"
+        android:layout_alignLeft="@+id/monsterFrame"
+        android:layout_alignStart="@+id/monsterFrame"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Winning by: 29"
+        android:id="@+id/winning"
+        android:layout_below="@+id/partyStr"
+        android:layout_alignLeft="@+id/partyStr"
+        android:layout_alignStart="@+id/partyStr"
+        android:layout_alignRight="@+id/playerFrame"
+        android:layout_alignEnd="@+id/playerFrame"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp" />
 
 
 </RelativeLayout>
