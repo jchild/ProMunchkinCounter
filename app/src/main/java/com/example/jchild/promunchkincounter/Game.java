@@ -1,5 +1,5 @@
 package com.example.jchild.promunchkincounter;
-import com.example.jchild.promunchkincounter.DatabaseHandler;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,13 +26,22 @@ public class Game extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         db = new DatabaseHandler(this);
+
+        //if there is no savedInstanceState, will create array for the player lists
         if (savedInstanceState == null || !savedInstanceState.containsKey("key")) {
-            players = new ArrayList<player>();
+            players = new ArrayList<>();
+
+            //sets up the list view
             ListView list = (ListView) findViewById(R.id.listView);
             list.setAdapter(new ListViewAdapter(this, players));
+
+            //listener for the list view, checking if users selects item on the list view
             list.setOnItemClickListener(new OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        //if user clicks on an item, will take object and pass it to next activity
                         player getplayer = players.get(position);
                         playerScreen(view, getplayer);
                     }
@@ -42,7 +51,12 @@ public class Game extends ActionBarActivity{
         }
 
     }
+
+    //handles the calls to next activity
+    //when user selects an object from the list view
+    //will get the object and pass it to next activity
     public void playerScreen(View v, player getplayer){
+        getplayer= db.getPlayer(Integer.parseInt(getplayer.getID()));
         Intent i = new Intent(this, playerStats.class);
         i.putExtra("thisPlayer", getplayer);
         startActivity(i);
@@ -58,12 +72,9 @@ public class Game extends ActionBarActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //check if user selects on menu; handles each item on the menu.
         if (id == R.id.add_user) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Add New Player");
@@ -99,6 +110,7 @@ public class Game extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    //handles adding of new player to array and database
     private void addNewPlayerData(String name){
         player newPlayer = new player();
         newPlayer.setName(name);
@@ -106,6 +118,7 @@ public class Game extends ActionBarActivity{
         players.add(newPlayer);
         db.addPlayer(newPlayer);
 
+        //toast to let user know of adding of additional player was successful
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, newPlayer.getName() + " added to the game.", duration);
@@ -127,11 +140,9 @@ public class Game extends ActionBarActivity{
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-    }
 
+    //if activity is resumed will not build new arrays, but will repopulate array with
+    //updated information from database.
     @Override
     protected void onResume(){
         super.onResume();
@@ -145,24 +156,13 @@ public class Game extends ActionBarActivity{
             }
         });
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
+    //handles if user presses the back button on the android phone.
+    //will end the game and clear database.
     @Override
     public void onBackPressed(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit");
         builder.setMessage("Are you sure you want to end the game?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

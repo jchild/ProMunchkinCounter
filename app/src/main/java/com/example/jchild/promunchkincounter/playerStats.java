@@ -1,16 +1,21 @@
 package com.example.jchild.promunchkincounter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.jchild.promunchkincounter.DatabaseHandler;
+
+import java.util.ArrayList;
 
 
 public class playerStats extends ActionBarActivity {
@@ -24,11 +29,11 @@ public class playerStats extends ActionBarActivity {
         db = new DatabaseHandler(this);
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
-        thisPlayer = db.getPlayer(Integer.parseInt(thisPlayer.getID()));
         updateStats();
 
         addWarCheckListener();
         addElfCheckListener();
+        WinGame();
     }
 
     @Override
@@ -104,7 +109,7 @@ public class playerStats extends ActionBarActivity {
             db.updatePlayer(thisPlayer);
         }
         if(Integer.parseInt(thisPlayer.getlvl())==10){
-            //win
+            WinGame();
         }
         updateStats();
 
@@ -153,7 +158,43 @@ public class playerStats extends ActionBarActivity {
     @Override
     public void onResume(){
         super.onResume();
+        db = new DatabaseHandler(this);
+        thisPlayer = db.getPlayer(Integer.parseInt(thisPlayer.getID()));
         addWarCheckListener();
         addElfCheckListener();
+        WinGame();
+    }
+
+    public void WinGame(){
+
+        ArrayList<player> winners = new ArrayList<>();
+        ArrayList<player> players = db.getAllPlayers();
+
+        for(int i = 0; i< players.size(); i++){
+            if(players.get(i).getlvl().matches("10")){
+                winners.add(players.get(i));
+            }
+        }
+        if(winners.size()>0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Congratulations!");
+            if (winners.size() == 1) {
+
+                builder.setMessage("Player " + winners.get(0).getName() + " has won!");
+            } else if (winners.size() == 2) {
+                builder.setMessage("Players " + winners.get(0).getName() + " and " + winners.get(1).getName() + " have won!");
+            }
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    db.endGame();
+                    finish();
+                }
+            });
+            AlertDialog dialog = builder.create();
+
+            dialog.show();
+
+        }
     }
 }

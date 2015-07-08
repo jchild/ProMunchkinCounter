@@ -120,12 +120,15 @@
         android:textSize="18dp"/>
 
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/playersList"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/end"
-        android:layout_toLeftOf="@+id/end" />
+        android:layout_toLeftOf="@+id/end"
+        android:outlineProvider="bounds"
+        android:backgroundTint="#ffc7c7c7"
+        android:layout_alignTop="@+id/end" />
 
     <Button
         android:layout_width="wrap_content"

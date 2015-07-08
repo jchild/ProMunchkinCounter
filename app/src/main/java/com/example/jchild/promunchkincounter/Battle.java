@@ -33,8 +33,8 @@ public class Battle extends ActionBarActivity {
 
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
-
         db = new DatabaseHandler(this);
+        thisPlayer = db.getPlayer(Integer.parseInt(thisPlayer.getID()));
         removeThisPlayer();
 
         Spinner spinner = (Spinner) findViewById(R.id.playersList);
@@ -237,6 +237,7 @@ public class Battle extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         thisPlayer.zeroBonus();
+        db.addPlayer(thisPlayer);
         Intent i = new Intent(this, playerStats.class);
         i.putExtra("thisPlayer", thisPlayer);
         startActivity(i);
