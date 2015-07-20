@@ -198,20 +198,16 @@ public class Battle extends ActionBarActivity {
         updateStats();
     }
     public void decreaseMon(View view) {
-        if (Integer.parseInt(monster.getEquip()) != 0) {
             monster.decreaseEquip();
             updateStats();
-        }
     }
     public void increasePlayEquip(View view){
         thisPlayer.increaseBonus();
         updateStats();
     }
     public void decreasePlayEquip(View view){
-        if(Integer.parseInt(thisPlayer.getBonus())!= 0){
             thisPlayer.decreaseBonus();
             updateStats();
-        }
 
     }
 
