@@ -38,4 +38,5 @@
         android:layout_alignStart="@+id/rules"
         android:layout_alignRight="@+id/rules"
         android:layout_alignEnd="@+id/rules" />
+
 </RelativeLayout>

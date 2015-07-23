@@ -1,200 +1,263 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+<!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="com.example.jchild.promunchkincounter.playerStats">
 
-    <TextView android:text="Player Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/pName"
-        android:textSize="25dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:id="@+id/pstr"
-        android:layout_alignTop="@+id/textStr"
-        android:layout_toRightOf="@+id/textStr"
-        android:layout_toEndOf="@+id/textStr"
-        android:paddingLeft="10dp"
-        android:textSize="20dp"/>
+    <!-- As the main content view, the view below consumes the entire
+         space available using match_parent in both dimensions. -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:id="@+id/container">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Monster Battle!"
-        android:id="@+id/allyButt"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="Battle"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Strength: "
-        android:id="@+id/textStr"
-        android:textSize="20dp"
-        android:layout_marginBottom="49dp"
-        android:layout_above="@+id/allyButt"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <FrameLayout
-        android:id="@+id/fram"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/frame1"
-        android:layout_below="@+id/frame2"
-        android:layout_centerHorizontal="true"></FrameLayout>
-
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/frame2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="38dp"
-        android:layout_marginStart="38dp"
-        android:layout_toStartOf="@+id/fram"
-        android:layout_alignBottom="@+id/fram"
-        android:id="@+id/lvlFrame"
-        android:layout_toLeftOf="@+id/fram">
+        <TextView android:text="Player Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/pName"
+            android:textSize="25dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="9"
-            android:id="@+id/lvlNum"
-            android:textSize="30dp"
-            android:layout_gravity="center"
-            android:textIsSelectable="false" />
+            android:text="0"
+            android:id="@+id/pstr"
+            android:layout_alignTop="@+id/textStr"
+            android:layout_toRightOf="@+id/textStr"
+            android:layout_toEndOf="@+id/textStr"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"/>
 
-        <ImageButton
-            android:textSize="25dp"
-            android:layout_width="118dp"
-            android:layout_height="71dp"
-            android:id="@+id/addLvl"
-            android:onClick="addLvl"
-            android:layout_gravity="center_horizontal|top"
-            android:background="@mipmap/ic_action_up" />
-
-        <ImageButton
-            android:layout_width="118dp"
-            android:layout_height="71dp"
-            android:id="@+id/minusLvl"
-            android:onClick="minusLvl"
-            android:layout_gravity="center_horizontal|bottom"
-            android:background="@mipmap/ic_action_down" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/strFrame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/frame2"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="38dp"
-        android:layout_toEndOf="@+id/fram"
-        android:layout_alignBottom="@+id/fram"
-        android:layout_toRightOf="@+id/fram">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monster Battle!"
+            android:id="@+id/allyButt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="Battle"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30"
-            android:id="@+id/equipNum"
-            android:textSize="30dp"
-            android:layout_gravity="center"
-            android:textIsSelectable="false" />
+            android:text="Strength: "
+            android:id="@+id/textStr"
+            android:textSize="20dp"
+            android:layout_marginBottom="49dp"
+            android:layout_above="@+id/allyButt"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-        <ImageButton
-            android:layout_width="118dp"
-            android:layout_height="71dp"
-            android:id="@+id/MinusEquip"
-            android:onClick="minusEquip"
-            android:layout_gravity="center_horizontal|bottom"
-            android:background="@mipmap/ic_action_down" />
+        <FrameLayout
+            android:id="@+id/fram"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/frame1"
+            android:layout_below="@+id/frame2"
+            android:layout_centerHorizontal="true"/>
 
-        <ImageButton
-            android:layout_width="118dp"
-            android:layout_height="71dp"
-            android:id="@+id/addEquip"
-            android:onClick="addEquip"
-            android:layout_gravity="center_horizontal|top"
-            android:background="@mipmap/ic_action_up" />
 
-    </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/frame1"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/pstr"
-        android:layout_alignParentStart="true"></FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/frame2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="38dp"
+            android:layout_marginStart="38dp"
+            android:layout_toStartOf="@+id/fram"
+            android:layout_alignBottom="@+id/fram"
+            android:id="@+id/lvlFrame"
+            android:layout_toLeftOf="@+id/fram">
 
-    <FrameLayout
-        android:id="@+id/frame2"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_alignTop="@+id/pName"
-        android:layout_centerHorizontal="true"></FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:id="@+id/lvlNum"
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:textIsSelectable="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Level"
-        android:textSize="18dp"
-        android:id="@+id/textView"
-        android:layout_above="@+id/lvlFrame"
-        android:layout_alignLeft="@id/lvlFrame"
-        android:layout_centerVertical="@+id/lvlFrame"
-        android:gravity="center"
-        android:layout_alignRight="@+id/lvlFrame"
-        android:layout_alignEnd="@+id/lvlFrame" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Equipment"
-        android:textSize="18dp"
-        android:id="@+id/textView2"
-        android:layout_above="@+id/strFrame"
-        android:layout_centerVertical="@+id/strFrame"
-        android:layout_alignLeft="@id/strFrame"
-        android:layout_alignRight="@id/strFrame"
-        android:layout_alignEnd="@id/strFrame"
-        android:gravity="center" />
+            <ImageButton
+                android:textSize="25dp"
+                android:layout_width="118dp"
+                android:layout_height="71dp"
+                android:id="@+id/addLvl"
+                android:onClick="addLvl"
+                android:layout_gravity="center_horizontal|top"
+                android:background="@mipmap/ic_action_up" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Elf"
-        android:id="@+id/elf"
-        android:layout_below="@+id/lvlFrame"
-        android:layout_toLeftOf="@+id/fram"
-        android:layout_alignLeft="@+id/lvlFrame"
-        android:layout_alignStart="@+id/lvlFrame" />
+            <ImageButton
+                android:layout_width="118dp"
+                android:layout_height="71dp"
+                android:id="@+id/minusLvl"
+                android:onClick="minusLvl"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@mipmap/ic_action_down" />
+        </FrameLayout>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Warrior"
-        android:id="@+id/warrior"
-        android:layout_below="@+id/strFrame"
-        android:layout_toRightOf="@+id/fram"
-        android:layout_alignRight="@+id/strFrame"
-        android:layout_alignEnd="@+id/strFrame" />
+        <FrameLayout
+            android:id="@+id/strFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/frame2"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="38dp"
+            android:layout_toEndOf="@+id/fram"
+            android:layout_alignBottom="@+id/fram"
+            android:layout_toRightOf="@+id/fram">
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30"
+                android:id="@+id/equipNum"
+                android:textSize="30dp"
+                android:layout_gravity="center"
+                android:textIsSelectable="false" />
+
+            <ImageButton
+                android:layout_width="118dp"
+                android:layout_height="71dp"
+                android:id="@+id/MinusEquip"
+                android:onClick="minusEquip"
+                android:layout_gravity="center_horizontal|bottom"
+                android:background="@mipmap/ic_action_down" />
+
+            <ImageButton
+                android:layout_width="118dp"
+                android:layout_height="71dp"
+                android:id="@+id/addEquip"
+                android:onClick="addEquip"
+                android:layout_gravity="center_horizontal|top"
+                android:background="@mipmap/ic_action_up" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame1"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignBottom="@+id/pstr"
+            android:layout_alignParentStart="true"/>
+
+        <FrameLayout
+            android:id="@+id/frame2"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_alignTop="@+id/pName"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Level"
+            android:textSize="18dp"
+            android:id="@+id/textView"
+            android:layout_above="@+id/lvlFrame"
+            android:layout_alignLeft="@id/lvlFrame"
+            android:layout_centerVertical="@+id/lvlFrame"
+            android:gravity="center"
+            android:layout_alignRight="@+id/lvlFrame"
+            android:layout_alignEnd="@+id/lvlFrame" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Equipment"
+            android:textSize="18dp"
+            android:id="@+id/textView2"
+            android:layout_above="@+id/strFrame"
+            android:layout_centerVertical="@+id/strFrame"
+            android:layout_alignLeft="@id/strFrame"
+            android:layout_alignRight="@id/strFrame"
+            android:layout_alignEnd="@id/strFrame"
+            android:gravity="center" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Elf"
+            android:id="@+id/elf"
+            android:layout_below="@+id/lvlFrame"
+            android:layout_toLeftOf="@+id/fram"
+            android:layout_alignLeft="@+id/lvlFrame"
+            android:layout_alignStart="@+id/lvlFrame" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Warrior"
+            android:id="@+id/warrior"
+            android:layout_below="@+id/strFrame"
+            android:layout_toRightOf="@+id/fram"
+            android:layout_alignRight="@+id/strFrame"
+            android:layout_alignEnd="@+id/strFrame" />
+
+    </RelativeLayout>
+
+
+    <!-- android:layout_gravity="start" tells DrawerLayout to treat
+             this as a sliding drawer on the left side for left-to-right
+             languages and on the right side for right-to-left languages.
+             If you're not building against API 17 or higher, use
+             android:layout_gravity="left" instead. -->
+    <!-- The drawer is given a fixed width in dp and extends the full height of
+         the container. -->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_gravity="start"
+        android:background="#ffeeeeee">
+
+        <TextView android:text="@string/name" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lvl"
+            android:id="@+id/level"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/str"
+            android:layout_marginRight="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str"
+            android:id="@+id/str"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/navigation_drawer"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Name" />
+
+
+    </RelativeLayout>
+
+</android.support.v4.widget.DrawerLayout>

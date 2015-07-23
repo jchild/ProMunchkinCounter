@@ -9,8 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.jchild.promunchkincounter.DatabaseHandler;
@@ -22,6 +24,7 @@ public class playerStats extends ActionBarActivity {
 
     player thisPlayer;
     DatabaseHandler db;
+    ArrayList<player> players;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,19 @@ public class playerStats extends ActionBarActivity {
         addWarCheckListener();
         addElfCheckListener();
         WinGame();
+
+        players = db.getAllPlayers();
+
+        // Set up the drawer.
+        ListView list = (ListView) findViewById(R.id.navigation_drawer);
+        list.setAdapter(new ListViewAdapter(this, players));
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(playerStats.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override

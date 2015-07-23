@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,6 +48,34 @@ public class Game extends ActionBarActivity{
                         playerScreen(view, getplayer);
                     }
                 });
+            list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Game.this);
+                    builder.setTitle("Are you sure?");
+                    builder.setMessage("Do you want to delete player: " + players.get(position).getName());
+
+                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.deletePlayer(players.get(position));
+                            players.remove(players.get(position));
+                            onResume();
+
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+
+                    dialog.show();
+                    return false;
+                }
+            });
         } else {
                 players = savedInstanceState.getParcelableArrayList("key");
         }
@@ -85,8 +115,10 @@ public class Game extends ActionBarActivity{
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String name = savedText.getText().toString().trim();
-                    addNewPlayerData(name);
+                    if(!savedText.getText().equals("")) {
+                        String name = savedText.getText().toString().trim();
+                        addNewPlayerData(name);
+                    }
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
