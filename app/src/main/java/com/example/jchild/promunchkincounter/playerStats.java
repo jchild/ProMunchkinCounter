@@ -3,6 +3,9 @@ package com.example.jchild.promunchkincounter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -11,11 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.jchild.promunchkincounter.DatabaseHandler;
+
 
 import java.util.ArrayList;
 
@@ -25,6 +27,10 @@ public class playerStats extends ActionBarActivity {
     player thisPlayer;
     DatabaseHandler db;
     ArrayList<player> players;
+
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +47,20 @@ public class playerStats extends ActionBarActivity {
         players = db.getAllPlayers();
 
         // Set up the drawer.
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         ListView list = (ListView) findViewById(R.id.navigation_drawer);
         list.setAdapter(new ListViewAdapter(this, players));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(playerStats.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                //if user clicks on an item, will take object and pass it to next activity
+                player getplayer = players.get(position);
+                playerScreen(view, getplayer);
             }
         });
+        setupDrawer();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
     }
 
@@ -65,6 +77,10 @@ public class playerStats extends ActionBarActivity {
         if(id == R.id.rules){
             Intent i = new Intent(this, Rules.class);
             startActivity(i);
+            return true;
+        }
+        // Activate the navigation drawer toggle
+        if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -97,11 +113,10 @@ public class playerStats extends ActionBarActivity {
         War.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(((CheckBox) v).isChecked()) {
+                if (((CheckBox) v).isChecked()) {
                     thisPlayer.setWarrior(true);
                     db.updatePlayer(thisPlayer);
-                }
-                else{
+                } else {
                     thisPlayer.setWarrior(false);
                     db.updatePlayer(thisPlayer);
                 }
@@ -213,4 +228,48 @@ public class playerStats extends ActionBarActivity {
 
         }
     }
+
+    public void playerScreen(View v, player getplayer){
+        getplayer= db.getPlayer(Integer.parseInt(getplayer.getID()));
+        Intent i = new Intent(this, playerStats.class);
+        i.putExtra("thisPlayer", getplayer);
+        startActivity(i);
+        finish();
+    }
+
+    private void setupDrawer() {
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Player List");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(getTitle().toString());
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        toggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.setDrawerListener(toggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
 }

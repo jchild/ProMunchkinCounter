@@ -8,10 +8,10 @@
     <Button
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:text="New Game"
+        android:text="Continue"
         android:id="@+id/game"
-        android:onClick="newGame"
-        android:layout_marginTop="122dp"
+        android:onClick="cont"
+        android:layout_marginTop="170dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -39,5 +39,14 @@
         android:layout_alignRight="@+id/rules"
         android:layout_alignEnd="@+id/rules" />
 
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text="New Game"
+        android:onClick="newGame"
+        android:id="@+id/cont"
+        android:layout_marginTop="122dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

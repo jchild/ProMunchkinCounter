@@ -16,6 +16,18 @@ public class Home extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        DatabaseHandler db = new DatabaseHandler(this);
+
+        if(db.getPlayersCount() == 0){
+            setContentView(R.layout.activity_home);
+        }
+
+        else{
+            setContentView(R.layout.activity_home_cont);
+        }
+
+
     }
 
     @Override
@@ -37,7 +49,54 @@ public class Home extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        DatabaseHandler db = new DatabaseHandler(this);
+
+        if(db.getPlayersCount() == 0){
+            setContentView(R.layout.activity_home);
+        }
+
+        else{
+            setContentView(R.layout.activity_home_cont);
+        }
+    }
+
     public void newGame(View view){
+        DatabaseHandler db = new DatabaseHandler(this);
+        if(db.getPlayersCount()!=0){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Game in progress");
+            builder.setMessage("By selecting new game the data for the current game in progress will be lost. Do you still want to continue?");
+
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DatabaseHandler db = new DatabaseHandler(Home.this);
+                    db.endGame();
+                    Intent intent = new Intent(Home.this, Game.class);
+                    startActivity(intent);
+
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+        }
+        else {
+            Intent intent = new Intent(this, Game.class);
+            startActivity(intent);
+        }
+    }
+    public void cont(View view){
         Intent intent = new Intent(this, Game.class);
         startActivity(intent);
     }

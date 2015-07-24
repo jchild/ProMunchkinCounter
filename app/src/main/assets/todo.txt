@@ -1,4 +1,1 @@
-- continue game button
-- new game dialog, ask user if wants to start new game if there is a game currently in database
-    - will wipe database if user selects positive action
 - art/style
