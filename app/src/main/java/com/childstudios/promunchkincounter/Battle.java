@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +29,7 @@ public class Battle extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_battle);
+        setContentView(com.childstudios.promunchkincounter.R.layout.activity_battle);
 
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
@@ -37,7 +37,7 @@ public class Battle extends ActionBarActivity {
         thisPlayer = db.getPlayer(Integer.parseInt(thisPlayer.getID()));
         removeThisPlayer();
 
-        Spinner spinner = (Spinner) findViewById(R.id.playersList);
+        Spinner spinner = (Spinner) findViewById(com.childstudios.promunchkincounter.R.id.playersList);
         spinner.setAdapter(new SpinnerAdapter(this, players));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -59,31 +59,14 @@ public class Battle extends ActionBarActivity {
         updateStats();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_battle, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.rules){
-            Intent i = new Intent(this, Rules.class);
-            startActivity(i);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void monsterLevelPop(){
         if(setMon == false) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Monster");
             builder.setMessage("Please Input the Level of the Monster");
-            View layout = View.inflate(this, R.layout.dialog_monster_lvl, null);
-            final EditText savedText = ((EditText) layout.findViewById(R.id.monsterlvl));
+            View layout = View.inflate(this, com.childstudios.promunchkincounter.R.layout.dialog_monster_lvl, null);
+            final EditText savedText = ((EditText) layout.findViewById(com.childstudios.promunchkincounter.R.id.monsterlvl));
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -165,12 +148,12 @@ public class Battle extends ActionBarActivity {
     }
 
     public void updateStats(){
-        TextView name = (TextView) findViewById(R.id.p_name);
-        TextView mon = (TextView) findViewById(R.id.monster);
-        TextView monBonus = (TextView) findViewById(R.id.monsterEquip);
-        TextView playBonus = (TextView) findViewById(R.id.playerBonus);
-        TextView winning = (TextView) findViewById(R.id.winning);
-        TextView party = (TextView) findViewById(R.id.partyStr);
+        TextView name = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.p_name);
+        TextView mon = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.monster);
+        TextView monBonus = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.monsterEquip);
+        TextView playBonus = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.playerBonus);
+        TextView winning = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.winning);
+        TextView party = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.partyStr);
 
         name.setText(thisPlayer.getName()+"'s Strength: "+ thisPlayer.getStr());
         mon.setText("Monster's Strength: "+ monster.getStr());

@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 /**
  * Created by Jonathan on 17/6/2015.
@@ -47,11 +47,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_item, null);
+            convertView = infalInflater.inflate(com.childstudios.promunchkincounter.R.layout.list_item, null);
         }
 
         TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+                .findViewById(com.childstudios.promunchkincounter.R.id.lblListItem);
 
         txtListChild.setText(childText);
         return convertView;
@@ -84,11 +84,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_group, null);
+            convertView = infalInflater.inflate(com.childstudios.promunchkincounter.R.layout.list_group, null);
         }
 
         TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
+                .findViewById(com.childstudios.promunchkincounter.R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 

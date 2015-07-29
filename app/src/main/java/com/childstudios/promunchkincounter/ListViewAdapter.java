@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jonathan on 18/6/2015.
@@ -21,6 +20,7 @@ public class ListViewAdapter extends BaseAdapter {
         this.context = context;
         this.players = players;
     }
+
 
     @Override
     public int getCount() {
@@ -43,12 +43,12 @@ public class ListViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.player_list_layout, null);
+            convertView = inflater.inflate(com.childstudios.promunchkincounter.R.layout.player_list_layout, null);
         }
 
-        TextView name = (TextView)convertView.findViewById(R.id.playerName);
-        TextView lvl=(TextView)convertView.findViewById(R.id.playerlvl);
-        TextView str = (TextView)convertView.findViewById(R.id.playerstr);
+        TextView name = (TextView)convertView.findViewById(com.childstudios.promunchkincounter.R.id.playerName);
+        TextView lvl=(TextView)convertView.findViewById(com.childstudios.promunchkincounter.R.id.playerlvl);
+        TextView str = (TextView)convertView.findViewById(com.childstudios.promunchkincounter.R.id.playerstr);
 
         name.setText(players.get(position).getName());
         lvl.setText(players.get(position).getlvl());

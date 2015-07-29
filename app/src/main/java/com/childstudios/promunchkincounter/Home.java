@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,16 +15,16 @@ public class Home extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(com.childstudios.promunchkincounter.R.layout.activity_home);
 
         DatabaseHandler db = new DatabaseHandler(this);
 
         if(db.getPlayersCount() == 0){
-            setContentView(R.layout.activity_home);
+            setContentView(com.childstudios.promunchkincounter.R.layout.activity_home);
         }
 
         else{
-            setContentView(R.layout.activity_home_cont);
+            setContentView(com.childstudios.promunchkincounter.R.layout.activity_home_cont);
         }
 
 
@@ -33,7 +33,7 @@ public class Home extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(com.childstudios.promunchkincounter.R.menu.menu_home, menu);
         return true;
     }
 
@@ -55,11 +55,11 @@ public class Home extends ActionBarActivity {
         DatabaseHandler db = new DatabaseHandler(this);
 
         if(db.getPlayersCount() == 0){
-            setContentView(R.layout.activity_home);
+            setContentView(com.childstudios.promunchkincounter.R.layout.activity_home);
         }
 
         else{
-            setContentView(R.layout.activity_home_cont);
+            setContentView(com.childstudios.promunchkincounter.R.layout.activity_home_cont);
         }
     }
 

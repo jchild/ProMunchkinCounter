@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.jchild.promunchkincounter.Game">
+    tools:context="com.childstudios.promunchkincounter.Game">
     <item android:id="@+id/add_user"
         android:title="Add User"
         android:icon="@mipmap/ic_action_new"

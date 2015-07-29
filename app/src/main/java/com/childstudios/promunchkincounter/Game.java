@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +25,7 @@ public class Game extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(com.childstudios.promunchkincounter.R.layout.activity_game);
 
         db = new DatabaseHandler(this);
 
@@ -34,18 +34,10 @@ public class Game extends ActionBarActivity{
             players = new ArrayList<>();
 
             //sets up the list view
-            ListView list = (ListView) findViewById(R.id.listView);
+            ListView list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.listView);
             list.setAdapter(new ListViewAdapter(this, players));
 
-            //listener for the list view, checking if users selects item on the list view
-            list.setOnItemClickListener(new OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        //if user clicks on an item, will take object and pass it to next activity
-                        player getplayer = players.get(position);
-                        playerScreen(view, getplayer);
-                    }
-                });
             list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -71,7 +63,16 @@ public class Game extends ActionBarActivity{
                     AlertDialog dialog = builder.create();
 
                     dialog.show();
-                    return false;
+                    return true;
+                }
+            });
+            //listener for the list view, checking if users selects item on the list view
+            list.setOnItemClickListener(new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    //if user clicks on an item, will take object and pass it to next activity
+                    player getplayer = players.get(position);
+                    playerScreen(view, getplayer);
                 }
             });
         } else {
@@ -94,7 +95,7 @@ public class Game extends ActionBarActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_game, menu);
+        getMenuInflater().inflate(com.childstudios.promunchkincounter.R.menu.menu_game, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -103,12 +104,12 @@ public class Game extends ActionBarActivity{
         int id = item.getItemId();
 
         //check if user selects on menu; handles each item on the menu.
-        if (id == R.id.add_user) {
+        if (id == com.childstudios.promunchkincounter.R.id.add_user) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Add New Player");
             builder.setMessage("Please Input the Players Name");
-            View layout= View.inflate(this, R.layout.dialog_new_player,null);
-            final EditText savedText = ((EditText)layout.findViewById(R.id.playerName));
+            View layout= View.inflate(this, com.childstudios.promunchkincounter.R.layout.dialog_new_player,null);
+            final EditText savedText = ((EditText)layout.findViewById(com.childstudios.promunchkincounter.R.id.playerName));
 
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
@@ -131,7 +132,7 @@ public class Game extends ActionBarActivity{
             dialog.show();
             return true;
         }
-        if(id == R.id.rules){
+        if(id == com.childstudios.promunchkincounter.R.id.rules){
             Intent i = new Intent(this, Rules.class);
             startActivity(i);
             return true;
@@ -177,7 +178,7 @@ public class Game extends ActionBarActivity{
     protected void onResume(){
         super.onResume();
         players = db.getAllPlayers();
-        ListView list = (ListView) findViewById(R.id.listView);
+        ListView list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.listView);
         list.setAdapter(new ListViewAdapter(this, players));
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -194,11 +195,10 @@ public class Game extends ActionBarActivity{
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit");
-        builder.setMessage("Are you sure you want to end the game?");
+        builder.setMessage("Are you sure you want to leave the game?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                db.endGame();
                 finish();
             }
         });

@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,11 +30,12 @@ public class playerStats extends ActionBarActivity {
 
     private ActionBarDrawerToggle toggle;
     private DrawerLayout drawerLayout;
+    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_stats);
+        setContentView(com.childstudios.promunchkincounter.R.layout.activity_player_stats);
         db = new DatabaseHandler(this);
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
@@ -45,10 +46,11 @@ public class playerStats extends ActionBarActivity {
         WinGame();
 
         players = db.getAllPlayers();
+        players.remove(Integer.parseInt(thisPlayer.getID()));
 
         // Set up the drawer.
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        ListView list = (ListView) findViewById(R.id.navigation_drawer);
+        drawerLayout = (DrawerLayout)findViewById(com.childstudios.promunchkincounter.R.id.drawer_layout);
+        list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.navigation_drawer);
         list.setAdapter(new ListViewAdapter(this, players));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,14 +69,14 @@ public class playerStats extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_player_stats, menu);
+        getMenuInflater().inflate(com.childstudios.promunchkincounter.R.menu.menu_player_stats, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.rules){
+        if(id == com.childstudios.promunchkincounter.R.id.rules){
             Intent i = new Intent(this, Rules.class);
             startActivity(i);
             return true;
@@ -89,7 +91,7 @@ public class playerStats extends ActionBarActivity {
 
     public void addElfCheckListener(){
 
-        CheckBox Elf = (CheckBox) findViewById(R.id.elf);
+        CheckBox Elf = (CheckBox) findViewById(com.childstudios.promunchkincounter.R.id.elf);
         Elf.setChecked(thisPlayer.isElf());
         Elf.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +110,7 @@ public class playerStats extends ActionBarActivity {
 
     public void addWarCheckListener(){
 
-        CheckBox War = (CheckBox) findViewById(R.id.warrior);
+        CheckBox War = (CheckBox) findViewById(com.childstudios.promunchkincounter.R.id.warrior);
         War.setChecked(thisPlayer.isWarrior());
         War.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,15 +126,16 @@ public class playerStats extends ActionBarActivity {
         });
     }
     public void updateStats(){
-        TextView lvl =(TextView) findViewById(R.id.lvlNum);
-        TextView equip = (TextView) findViewById(R.id.equipNum);
-        TextView name = (TextView) findViewById(R.id.pName);
-        TextView  str = (TextView) findViewById(R.id.pstr);
+        TextView lvl =(TextView) findViewById(com.childstudios.promunchkincounter.R.id.lvlNum);
+        TextView equip = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.equipNum);
+        TextView name = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.pName);
+        TextView  str = (TextView) findViewById(com.childstudios.promunchkincounter.R.id.pstr);
 
         lvl.setText( thisPlayer.getlvl());
         equip.setText(thisPlayer.getEquip());
         name.setText(thisPlayer.getName());
         str.setText(thisPlayer.getStr());
+        players = db.getAllPlayers();
     }
     public void addLvl(View view){
         if(Integer.parseInt(thisPlayer.getlvl()) != 10) {
@@ -238,11 +241,12 @@ public class playerStats extends ActionBarActivity {
     }
 
     private void setupDrawer() {
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, com.childstudios.promunchkincounter.R.string.drawer_open, com.childstudios.promunchkincounter.R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+
                 getSupportActionBar().setTitle("Player List");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
@@ -254,7 +258,6 @@ public class playerStats extends ActionBarActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
-
         toggle.setDrawerIndicatorEnabled(true);
         drawerLayout.setDrawerListener(toggle);
     }
@@ -271,5 +274,4 @@ public class playerStats extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         toggle.onConfigurationChanged(newConfig);
     }
-
 }

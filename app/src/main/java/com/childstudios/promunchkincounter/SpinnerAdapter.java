@@ -1,4 +1,4 @@
-package com.example.jchild.promunchkincounter;
+package com.childstudios.promunchkincounter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -42,12 +42,12 @@ public class SpinnerAdapter extends BaseAdapter{
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.player_list_layout, null);
+            convertView = inflater.inflate(com.childstudios.promunchkincounter.R.layout.player_list_layout, null);
         }
 
-        convertView = inflater.inflate(R.layout.spinner_layout, null);
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        TextView str = (TextView) convertView.findViewById(R.id.str);
+        convertView = inflater.inflate(com.childstudios.promunchkincounter.R.layout.spinner_layout, null);
+        TextView name = (TextView) convertView.findViewById(com.childstudios.promunchkincounter.R.id.name);
+        TextView str = (TextView) convertView.findViewById(com.childstudios.promunchkincounter.R.id.str);
 
         name.setText(players.get(position).getName());
         if(Integer.parseInt(players.get(position).getlvl()) == -1)
