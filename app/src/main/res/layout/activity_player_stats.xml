@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff1e4"
     tools:context="com.childstudios.promunchkincounter.playerStats">
 
 
@@ -36,13 +37,15 @@
             android:textSize="20dp"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:text="Monster Battle!"
             android:id="@+id/allyButt"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:onClick="Battle"/>
+            android:onClick="Battle"
+            android:textColor="#fff1e4"
+            android:background="@drawable/button_style"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -225,7 +228,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:layout_gravity="start"
-        android:background="#ffeeeeee">
+        android:background="#fff1e4">
 
         <TextView android:text="@string/name" android:layout_width="wrap_content"
             android:layout_height="wrap_content"
