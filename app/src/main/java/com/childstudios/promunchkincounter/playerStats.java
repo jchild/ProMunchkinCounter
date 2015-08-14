@@ -31,6 +31,7 @@ public class playerStats extends ActionBarActivity {
     private ActionBarDrawerToggle toggle;
     private DrawerLayout drawerLayout;
     private ListView list;
+    private ListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +40,16 @@ public class playerStats extends ActionBarActivity {
         db = new DatabaseHandler(this);
         Bundle b = getIntent().getExtras();
         thisPlayer = b.getParcelable("thisPlayer");
-        updateStats();
-
-        addWarCheckListener();
-        addElfCheckListener();
-        WinGame();
+        int position = b.getInt("thisPosition");
 
         players = db.getAllPlayers();
-        players.remove(Integer.parseInt(thisPlayer.getID()));
+        players.remove(position);
 
         // Set up the drawer.
         drawerLayout = (DrawerLayout)findViewById(com.childstudios.promunchkincounter.R.id.drawer_layout);
         list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.navigation_drawer);
-        list.setAdapter(new ListViewAdapter(this, players));
+        adapter = new ListViewAdapter(this, players);
+        list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -63,6 +61,11 @@ public class playerStats extends ActionBarActivity {
         setupDrawer();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        addWarCheckListener();
+        addElfCheckListener();
+        WinGame();
+        updateStats();
 
     }
 
@@ -136,6 +139,7 @@ public class playerStats extends ActionBarActivity {
         name.setText(thisPlayer.getName());
         str.setText(thisPlayer.getStr());
         players = db.getAllPlayers();
+        adapter.notifyDataSetChanged();
     }
     public void addLvl(View view){
         if(Integer.parseInt(thisPlayer.getlvl()) != 10) {
@@ -246,7 +250,6 @@ public class playerStats extends ActionBarActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
                 getSupportActionBar().setTitle("Player List");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }

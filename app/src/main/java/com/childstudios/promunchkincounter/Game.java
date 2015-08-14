@@ -19,8 +19,11 @@ import java.util.ArrayList;
 
 public class Game extends ActionBarActivity{
 
-    ArrayList<player> players;
-    DatabaseHandler db;
+    private ArrayList<player> players;
+    private DatabaseHandler db;
+    private ListView list;
+    private ListViewAdapter adapter;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,9 @@ public class Game extends ActionBarActivity{
             players = new ArrayList<>();
 
             //sets up the list view
-            ListView list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.listView);
-            list.setAdapter(new ListViewAdapter(this, players));
+            list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.listView);
+            adapter = new ListViewAdapter(this, players);
+            list.setAdapter(adapter);
 
 
             list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -48,9 +52,8 @@ public class Game extends ActionBarActivity{
                     builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            db.deletePlayer(players.get(position));
-                            players.remove(players.get(position));
-                            onResume();
+                            removePlayer(position);
+                            //onResume();
 
                         }
                     });
@@ -72,7 +75,8 @@ public class Game extends ActionBarActivity{
 
                     //if user clicks on an item, will take object and pass it to next activity
                     player getplayer = players.get(position);
-                    playerScreen(view, getplayer);
+                    //test(view, getplayer, position);
+                    playerScreen(view, getplayer, position);
                 }
             });
         } else {
@@ -84,13 +88,30 @@ public class Game extends ActionBarActivity{
     //handles the calls to next activity
     //when user selects an object from the list view
     //will get the object and pass it to next activity
-    public void playerScreen(View v, player getplayer){
+    public void playerScreen(View v, player getplayer, int postion){
         getplayer= db.getPlayer(Integer.parseInt(getplayer.getID()));
         Intent i = new Intent(this, playerStats.class);
         i.putExtra("thisPlayer", getplayer);
+        i.putExtra("thisPosition", postion);
         startActivity(i);
         finish();
     }
+
+    public void test(View v, player getplayer, int position){
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, getplayer.getName() + " name, " + position + " position, " + getplayer.getID()+ " ID", duration);
+        toast.show();
+    }
+
+    public void removePlayer(int position){
+
+
+        db.deletePlayer(players.get(position));
+        players.remove(position);
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,9 +166,11 @@ public class Game extends ActionBarActivity{
     private void addNewPlayerData(String name){
         player newPlayer = new player();
         newPlayer.setName(name);
-        newPlayer.setID(players.size());
+        id = db.getMaxID() + 1;
+        newPlayer.setID(id);
         players.add(newPlayer);
         db.addPlayer(newPlayer);
+        adapter.notifyDataSetChanged();
 
         //toast to let user know of adding of additional player was successful
         Context context = getApplicationContext();
@@ -178,14 +201,11 @@ public class Game extends ActionBarActivity{
     protected void onResume(){
         super.onResume();
         players = db.getAllPlayers();
-        ListView list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.listView);
-        list.setAdapter(new ListViewAdapter(this, players));
-        list.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                player getplayer = players.get(position);
-                playerScreen(view, getplayer);
-            }
-        });
+        id = players.size();
+        list = (ListView) findViewById(com.childstudios.promunchkincounter.R.id.listView);
+        adapter = new ListViewAdapter(this, players);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     //handles if user presses the back button on the android phone.

@@ -62,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_LEVEL, players.getlvl());
         values.put(KEY_EQUIPMENT,players.getEquip());
         values.put(KEY_ELF,String.valueOf(players.isElf()));
-        values.put(KEY_WARRIOR,String.valueOf(players.isWarrior()));
+        values.put(KEY_WARRIOR, String.valueOf(players.isWarrior()));
 
         // Inserting Row
         db.insert(TABLE_PLAYER, null, values);
@@ -134,5 +134,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return count
         return num;
+    }
+
+    public int getMaxID(){
+        int id = 0;
+
+        String query = "SELECT MAX("+ KEY_ID +") FROM " + TABLE_PLAYER;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+        id = cursor.getInt(0);
+
+        return id;
     }
 }
